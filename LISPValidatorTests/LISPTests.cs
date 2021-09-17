@@ -14,7 +14,7 @@ namespace LISPValidatorTests
             //act
             bool validationResult = Validator.ValidateLISP(noParentheses);
             //assert
-            Assert.AreEqual(false, validationResult);
+            Assert.IsFalse(validationResult);
         }
 
         [TestMethod]
@@ -25,7 +25,7 @@ namespace LISPValidatorTests
             //act
             bool validationResult = Validator.ValidateLISP(oddParentheses);
             //assert
-            Assert.AreEqual(false, validationResult);
+            Assert.IsFalse(validationResult);
         }
 
         [TestMethod]
@@ -36,7 +36,7 @@ namespace LISPValidatorTests
             //act
             bool validationResult = Validator.ValidateLISP(unmatchedParentheses);
             //assert
-            Assert.AreEqual(false, validationResult);
+            Assert.IsFalse(validationResult);
         }
 
         [TestMethod]
@@ -47,29 +47,40 @@ namespace LISPValidatorTests
             //act
             bool validationResult = Validator.ValidateLISP(unmatchedParentheses);
             //assert
-            Assert.AreEqual(false, validationResult);
+            Assert.IsFalse(validationResult);
+        }
+
+        [TestMethod]
+        public void Unmatched_Parentheses_3()
+        {
+            //arrange
+            string unmatchedParentheses = "())(()";
+            //act
+            bool validationResult = Validator.ValidateLISP(unmatchedParentheses);
+            //assert
+            Assert.IsFalse(validationResult);
         }
 
         [TestMethod]
         public void Matched_Parentheses_1()
         {
             //arrange
-            string unmatchedParentheses = "()()";
+            string matchedParentheses = "()()";
             //act
-            bool validationResult = Validator.ValidateLISP(unmatchedParentheses);
+            bool validationResult = Validator.ValidateLISP(matchedParentheses);
             //assert
-            Assert.AreEqual(true, validationResult);
+            Assert.IsTrue(validationResult);
         }
 
         [TestMethod]
         public void Nested_Parentheses()
         {
             //arrange
-            string unmatchedParentheses = "(()())";
+            string nestedParentheses = "(()())";
             //act
-            bool validationResult = Validator.ValidateLISP(unmatchedParentheses);
+            bool validationResult = Validator.ValidateLISP(nestedParentheses);
             //assert
-            Assert.AreEqual(true, validationResult);
+            Assert.IsTrue(validationResult);
         }
     }
 }
