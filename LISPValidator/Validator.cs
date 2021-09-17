@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using System.Text.RegularExpressions;
 
 namespace LISPValidator
 {
@@ -6,17 +7,19 @@ namespace LISPValidator
     {
         public static bool ValidateLISP(string lispString)
         {
-            //no parentheses
-            if (lispString.IndexOfAny(new char[] { '(', ')' }) == -1) return false;
+            //no parenthesis
+            if (lispString.IndexOfAny(new char[] { '(', ')' }) == -1)
+                return false;
 
-            //unequal number of open and closed parentheses
+            //unequal number of open and closed parenthesis
             var openParenthesisCount = lispString.Count(x => x == '(');
             var closedParenthesisCount = lispString.Count(x => x == ')');
 
-            if (openParenthesisCount != closedParenthesisCount) return false;
+            if (openParenthesisCount != closedParenthesisCount)
+                return false;
 
-            //unmatched parentheses
-            lispString = lispString.Replace("()", "");
+            //unmatched parenthesis
+            lispString = Regex.Replace(lispString, "[^()]", "").Replace("()", "");
             var firstOpenParenthesesIndex = lispString.IndexOf('(');
             var firstClosedParenthesesIndex = lispString.IndexOf(')');
             var lastOpenParenthesesIndex = lispString.LastIndexOf('(');
@@ -25,7 +28,8 @@ namespace LISPValidator
             if (firstOpenParenthesesIndex > firstClosedParenthesesIndex ||
                 lastOpenParenthesesIndex > lastClosedParenthesesIndex)
                 return false;
-            else return true;
+            else
+                return true;
 
         }
     }
