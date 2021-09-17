@@ -7,26 +7,24 @@ namespace LISPValidator
     {
         public static bool ValidateLISP(string lispString)
         {
-            //no parenthesis
-            if (lispString.IndexOfAny(new char[] { '(', ')' }) == -1)
-                return false;
-
-            //unequal number of open and closed parenthesis
+            //no parenthesis or unequal number of open and closed parenthesis
             var openParenthesisCount = lispString.Count(x => x == '(');
             var closedParenthesisCount = lispString.Count(x => x == ')');
 
-            if (openParenthesisCount != closedParenthesisCount)
+            if ((openParenthesisCount + closedParenthesisCount) == 0
+                || openParenthesisCount != closedParenthesisCount)
                 return false;
 
             //unmatched parenthesis
-            lispString = Regex.Replace(lispString, "[^()]", "").Replace("()", "");
-            var firstOpenParenthesesIndex = lispString.IndexOf('(');
-            var firstClosedParenthesesIndex = lispString.IndexOf(')');
-            var lastOpenParenthesesIndex = lispString.LastIndexOf('(');
-            var lastClosedParenthesesIndex = lispString.LastIndexOf(')');
+            lispString = Regex.Replace(lispString, @"[^()]\(\)", "");
 
-            if (firstOpenParenthesesIndex > firstClosedParenthesesIndex ||
-                lastOpenParenthesesIndex > lastClosedParenthesesIndex)
+            var firstOpenParenthesisIndex = lispString.IndexOf('(');
+            var firstClosedParenthesisIndex = lispString.IndexOf(')');
+            var lastOpenParenthesisIndex = lispString.LastIndexOf('(');
+            var lastClosedParenthesisIndex = lispString.LastIndexOf(')');
+
+            if (firstOpenParenthesisIndex > firstClosedParenthesisIndex ||
+                lastOpenParenthesisIndex > lastClosedParenthesisIndex)
                 return false;
             else
                 return true;
